@@ -1,8 +1,15 @@
 import React from 'react'
-import { Card, CardContent, Typography, Box } from '@mui/material'
+import { Card, CardContent, Typography, Box, Button } from '@mui/material'
 
 // Displays a card with short URL details
 const ShortURLCard = ({ data }) => {
+  // Redirect handler
+  const handleRedirect = () => {
+    // Use data.shortUrl if available, else build the URL using the shortcode
+    const urlToRedirect = data.shortUrl || `${window.location.origin}/${data.shortcode}`
+    window.location.href = urlToRedirect
+  }
+
   return (
     <Card
       sx={{
@@ -28,9 +35,14 @@ const ShortURLCard = ({ data }) => {
           <strong>Expires At:</strong> {data.expiresAt}
         </Typography>
         {/* Creation date */}
-        <Typography variant="body2">
+        <Typography variant="body2" sx={{ mb: 2 }}>
           <strong>Created At:</strong> {data.createdAt}
         </Typography>
+
+        {/* Redirect button */}
+        <Button variant="contained" color="primary" onClick={handleRedirect}>
+          Go to Short URL
+        </Button>
       </CardContent>
     </Card>
   )
